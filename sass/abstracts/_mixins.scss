@@ -1,0 +1,86 @@
+@mixin center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+
+
+@mixin waterFlow{
+  width: auto;
+  height:auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+
+
+  &::before,
+  &::after{
+    content:"";
+    position: absolute;
+    top:-12rem;
+    left:-5rem;
+    width: 20rem;
+    height:20rem;
+    border-radius: 32%;
+    visibility: hidden;
+  }
+  &::before{
+    background: $color-grey-dark-3;
+    animation: beforeAnimation 1.2s infinite;
+
+  }
+  &::after{
+    background: $color-grey-dark;
+    animation:afterAnimation 1.2s infinite;
+
+  }
+  &:hover::after,
+  &:hover::before{
+    visibility: visible;
+  }
+}
+/*
+Media query manager
+0-600px: phone
+600-900px:tablet portrait
+900-1200px: tablet landscape
+1200 -1800px:  where our normal style apply
+1800+  : Big desktop
+
+break point argument choices:
+-phone
+-tab-port
+-tab-land
+-big-desktop
+
+1em = 16px
+ORDER :Base +typography > general layout +grid > page layout
+*/
+
+@mixin  respond($breakpoint){
+  @if $breakpoint == gorib-phone{
+    @media only screen and (max-width: 30.375em){@content}//440px
+  }
+  @if $breakpoint == phone{
+    @media only screen and (max-width: 37.25em){@content}//600px
+  }
+  @if $breakpoint == tab-port{
+    @media only screen and (max-width: 56.25em){@content}//900px
+  }
+  @if $breakpoint == tab-land{
+    @media only screen and (max-width: 75em){@content}//1200px
+  }
+  @if $breakpoint == big-desktop{
+    @media only screen and (min-width: 112.5em){@content}//1800px
+  }
+}
